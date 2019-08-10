@@ -12,6 +12,7 @@ import UIKit
 protocol SearchViewDataSource : NSObjectProtocol {
     func allSearchModel() -> [SearchModel]?
     func isEmptySearchBar() -> Bool
+    func countSearchBar()->Int
 }
 protocol SearchViewDelegate : NSObjectProtocol {
     func onClickedCellWith(index : Int , sender : UITableViewCell)
@@ -68,7 +69,6 @@ extension SearchView : UITableViewDelegate , UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.cellId, for: indexPath) as! SearchTableViewCell
         cell.searchModel = self.dataSource?.allSearchModel()?[indexPath.row]
-        cell.backgroundColor = .random
         return cell
     }
     
@@ -78,28 +78,30 @@ extension SearchView : UITableViewDelegate , UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("didSelectRowAt")
+        guard let delegate = self.delegate else { return }
+        let cell = tableView.cellForRow(at: indexPath) as! SearchTableViewCell
+        delegate.onClickedCellWith(index: indexPath.row, sender: cell)
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let dataSource = self.dataSource else { return 0 }
         
-        let isValid = dataSource.allSearchModel()?.isEmpty ?? false && dataSource.isEmptySearchBar() == true
-        return isValid ? 250 : 0
+        let isValid = dataSource.allSearchModel()?.isEmpty ?? false && (dataSource.isEmptySearchBar() == true || dataSource.countSearchBar() < 3)
+        return isValid ? 400 : 0
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         guard let dataSource = self.dataSource else { return 0 }
         
-        let isValid = dataSource.allSearchModel()?.isEmpty ?? false && dataSource.isEmptySearchBar() == false
-        return isValid ? 250 : 0
+        let isValid = dataSource.allSearchModel()?.isEmpty ?? false && dataSource.isEmptySearchBar() == false && dataSource.countSearchBar() >= 3
+        return isValid ? 400 : 0
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let redView = UIView()
-        redView.backgroundColor = .red
-        return redView
+        let emptyViewPage = EmptyViewPage(frame: .zero)
+        emptyViewPage.countSearchText = dataSource?.countSearchBar()
+        return emptyViewPage
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let greenView = UIView()
-        greenView.backgroundColor = .green
-        return greenView
+        let searchLoadingView = SearchLoadingView(frame:.zero)
+        return searchLoadingView
     }
     
 }

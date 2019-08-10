@@ -12,14 +12,21 @@ protocol SearchViewModelDelegate : NSObjectProtocol {
     func errorGetSearchModels(errorMessage:String?)
     func successGetSearchModels()
 }
-enum MediaType : String {
+enum MediaType : String , CaseIterable {
+    case all
     case movie
     case podcast
     case music
     case musicVideo
-    case all
+    case audiobook
+    case shortFilm
+    case tvShow
+    case software
+    case ebook
 }
 class SearchViewModel: BaseViewModel {
+    
+    private var mediaTypes = MediaType.allCases
     
     weak var delegate : SearchViewModelDelegate?
     
@@ -42,10 +49,25 @@ class SearchViewModel: BaseViewModel {
     override func setupInit() {
         super.setupInit()
         // nothing
+        
     }
     
     func getAllSearchModels()->[SearchModel]?{
         return searchModels
+    }
+    func getAllMediaTypes()->[MediaType]?{
+        return self.mediaTypes
+    }
+    func getSelectedMediaType()->Int{
+        print("selected media Type index : " ,mediaTypes.firstIndex(of: selectedMediaType) ?? 0)
+        return mediaTypes.firstIndex(of: selectedMediaType) ?? 0
+    }
+    func setSelectedMediaType(index : Int){
+        if index < 0 || index >= mediaTypes.count{
+            return
+        }
+        selectedMediaType = mediaTypes[index]
+        startSearchOrganization()
     }
     func startSearchBarTextDidChange(){
         self.searchModels.removeAll()

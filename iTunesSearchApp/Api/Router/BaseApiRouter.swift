@@ -54,7 +54,7 @@ public class BaseApiRouter: URLRequestConvertible , APIConfiguration{
                 urlRequest.setValue(header.value, forHTTPHeaderField: header.field)
             }
         }
-        
+
         if let encoding = self.encoding {
             return try  encoding.encode(urlRequest, with: parameters)
         }

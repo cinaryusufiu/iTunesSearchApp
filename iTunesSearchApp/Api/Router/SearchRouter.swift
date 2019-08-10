@@ -52,7 +52,7 @@ final class SearchRouter : BaseApiRouter {
     override func configureEncodingWithEndPoint() -> ParameterEncoding? {
         switch endPoint {
         case .searchWithTerm:
-            return URLEncoding.default
+            return URLEncoding.default//...
         default:
             return URLEncoding.default
         }
@@ -70,7 +70,7 @@ final class SearchRouter : BaseApiRouter {
         case .searchWithTerm:
             return .get
         default:
-            return .get
+            return .get // .post
         }
     }
 }

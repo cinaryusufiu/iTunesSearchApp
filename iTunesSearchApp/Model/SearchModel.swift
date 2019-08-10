@@ -19,8 +19,9 @@ struct SearchModel : Codable {
     var artistName : String?
     var collectionName : String?
     var trackName : String?
-    var imageName: String?
+    var imageUrl: String?
     var country: String?
+    var shortDescription : String?
     
    
     enum CodingKeys : String, CodingKey{
@@ -35,6 +36,7 @@ struct SearchModel : Codable {
         case trackName
         case artworkUrl100
         case country
+        case shortDescription
     }
     init(from decoder: Decoder) throws {
         
@@ -48,8 +50,9 @@ struct SearchModel : Codable {
         artistName = try? container.decode(String.self, forKey: .artistName)
         collectionName = try? container.decode(String.self, forKey: .collectionName)
         trackName = try? container.decode(String.self, forKey: .trackName)
-        imageName = try? container.decode(String.self, forKey: .artworkUrl100)
+        imageUrl = try? container.decode(String.self, forKey: .artworkUrl100)
         country = try? container.decode(String.self, forKey: .country)
+        shortDescription = try? container.decode(String.self, forKey: .shortDescription)
     }
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -62,7 +65,8 @@ struct SearchModel : Codable {
         try container.encode(artistName, forKey: .artistName)
         try container.encode(collectionName, forKey: .collectionName)
         try container.encode(trackName, forKey: .trackName)
-        try container.encode(imageName, forKey: .artworkUrl100)
+        try container.encode(imageUrl, forKey: .artworkUrl100)
         try container.encode(country, forKey: .country)
+        try container.encode(shortDescription, forKey: .shortDescription)
     }
 }

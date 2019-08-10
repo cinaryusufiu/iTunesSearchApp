@@ -13,6 +13,7 @@ class BaseView: UIView {
     
     let activityView : UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(frame: .zero)
+        view.color = .black
         return view
     }()
     
