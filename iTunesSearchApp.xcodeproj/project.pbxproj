@@ -42,6 +42,7 @@
 		C48A30DF22FE57790074E708 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A30DE22FE57790074E708 /* DetailViewController.swift */; };
 		C48A30E122FE59050074E708 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A30E022FE59050074E708 /* DetailViewModel.swift */; };
 		C48A30E322FE63A90074E708 /* FilterOptionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A30E222FE63A90074E708 /* FilterOptionModel.swift */; };
+		C48A30E622FE714C0074E708 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48A30E522FE714C0074E708 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		C48A30DE22FE57790074E708 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		C48A30E022FE59050074E708 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		C48A30E222FE63A90074E708 /* FilterOptionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterOptionModel.swift; sourceTree = "<group>"; };
+		C48A30E522FE714C0074E708 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		DB5B1E5CCDDC9D6CA13244E7 /* Pods_iTunesSearchApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iTunesSearchApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 				C4097EDC22FDE316005C661C /* BaseCollectionCell.swift */,
 				C4097EDB22FDDFEC005C661C /* Custom */,
 				C4097EDA22FDDFCE005C661C /* Search */,
+				C48A30E422FE71270074E708 /* Detail */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -269,6 +272,14 @@
 				C4097ED022FD8AC0005C661C /* EmptyViewPage.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		C48A30E422FE71270074E708 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				C48A30E522FE714C0074E708 /* DetailView.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -411,6 +422,7 @@
 				C4097EA922FC6331005C661C /* HeaderUtils.swift in Sources */,
 				C4097EDD22FDE316005C661C /* BaseCollectionCell.swift in Sources */,
 				C4097EC122FC8248005C661C /* UIView-Extension.swift in Sources */,
+				C48A30E622FE714C0074E708 /* DetailView.swift in Sources */,
 				C4097EBA22FC7910005C661C /* ResponseModel.swift in Sources */,
 				C4097ECB22FCF74E005C661C /* BaseView.swift in Sources */,
 				C48A30DD22FE55530074E708 /* UserDefault-Extension.swift in Sources */,

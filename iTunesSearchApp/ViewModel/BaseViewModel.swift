@@ -20,7 +20,7 @@ class BaseViewModel: NSObject {
     }
     internal func getTitleNavigationBar()->String? {
         
-        return "BaseViewModelString"
+        return "BaseViewModelTitleString"
     }
     
 }

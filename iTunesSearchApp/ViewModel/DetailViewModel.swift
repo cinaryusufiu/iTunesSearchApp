@@ -8,26 +8,16 @@
 
 import Foundation
 
-protocol DetailViewModelDelegate : NSObjectProtocol {
-    func reloadView()
-}
 class DetailViewModel: BaseViewModel {
-    
-    weak var delegate :DetailViewModelDelegate?{
-        didSet{
-            guard let delegate = self.delegate else { return }
-            delegate.reloadView()
-        }
-    }
     
     private var searchModel : SearchModel?
     
     init(searchModel : SearchModel) {
-        self.searchModel = searchModel
         super.init()
+        self.searchModel = searchModel
         print(searchModel)
     }
-    func getSearchModel() ->SearchModel? {
+    func getSearchModel() ->SearchModel?{
         return searchModel
     }
     override func getTitleNavigationBar() -> String? {

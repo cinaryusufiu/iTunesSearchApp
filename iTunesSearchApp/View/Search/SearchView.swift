@@ -28,6 +28,7 @@ class SearchView: BaseView {
         tb.dataSource = self
         tb.keyboardDismissMode = .onDrag
         tb.separatorStyle = .none
+        tb.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
         return tb
     }()
     
@@ -45,7 +46,7 @@ class SearchView: BaseView {
     }
     override func setupAddConstraint() {
         super.setupAddConstraint()
-        tableView.fillSafeAreaSuperView()
+        tableView.fillSuperView()
     }
     override func setupTableView() {
         super.setupTableView()

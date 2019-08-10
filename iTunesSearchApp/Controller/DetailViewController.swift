@@ -11,6 +11,10 @@ import UIKit
 
 class DetailViewController: BaseViewController {
     
+    let detailView : DetailView = {
+       let view = DetailView(frame: .zero)
+       return view
+    }()
     
     var detailViewModel : DetailViewModel!
     
@@ -30,15 +34,14 @@ class DetailViewController: BaseViewController {
     }
     fileprivate func setupInitilaze(detailViewModel : DetailViewModel?){
         guard let detailVM = detailViewModel else { return  }
-        detailVM.delegate = self
+        
         self.detailViewModel = detailVM
     }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupView()
+        detailView.searchModel = detailViewModel.getSearchModel()
     }
     
     //MARK:SetupFunctions
@@ -50,21 +53,14 @@ class DetailViewController: BaseViewController {
     }
     override func setupNavigationBar() {
         super.setupNavigationBar()
-        
+        title = detailViewModel.getTitleNavigationBar()
     }
     override func setupAddView() {
         super.setupAddView()
-        
+        view.addSubview(detailView)
     }
     override func setupAddConstraint() {
         super.setupAddConstraint()
-        
-    }
-}
-extension DetailViewController : DetailViewModelDelegate{
-   
-    //MARK:DetailViewModelDelegate
-    func reloadView() {
-        
+        detailView.fillSuperView()
     }
 }

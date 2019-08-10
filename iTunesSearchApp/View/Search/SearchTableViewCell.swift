@@ -28,7 +28,7 @@ class SearchTableViewCell: BaseTableViewCell {
     let artistNameLabel : UILabel = {
         let label = UILabel(frame: .zero)
         label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = UIColor.lightGray
+        label.textColor = UIColor.black
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
@@ -55,7 +55,11 @@ class SearchTableViewCell: BaseTableViewCell {
         label.textColor = .purple
         return label
     }()
-    
+    let seperatorView : UIView = {
+        let view = UIView(frame: .zero)
+        view.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        return view
+    }()
     //MARK:SetupFunctions
     override func setupView() {
         super.setupView()
@@ -71,6 +75,7 @@ class SearchTableViewCell: BaseTableViewCell {
         addSubview(artistNameLabel)
         addSubview(kindTitleLabel)
         addSubview(descriptionTextLabel)
+        addSubview(seperatorView)
     }
     override func setupAddConstraint() {
         super.setupAddConstraint()
@@ -82,7 +87,8 @@ class SearchTableViewCell: BaseTableViewCell {
         collectionNameLabel.anchor(top: searchImageView.topAnchor, leading: searchImageView.trailingAnchor, bottom: nil, trailing: trailingAnchor, paddingTop: 10, paddingleft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, centerX: nil, centerY: nil)
         
         artistNameLabel.anchor(top: collectionNameLabel.bottomAnchor, leading: searchImageView.trailingAnchor, bottom: nil, trailing: trailingAnchor, paddingTop: 6, paddingleft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0, centerX: nil, centerY: nil)
-         descriptionTextLabel.anchor(top: artistNameLabel.bottomAnchor, leading: searchImageView.trailingAnchor, bottom: nil, trailing: kindTitleLabel.leadingAnchor, paddingTop: 6, paddingleft: 10, paddingBottom: 0, paddingRight: 4, width: 0, height: 0, centerX: nil, centerY: nil)
+        descriptionTextLabel.anchor(top: artistNameLabel.bottomAnchor, leading: searchImageView.trailingAnchor, bottom: nil, trailing: kindTitleLabel.leadingAnchor, paddingTop: 6, paddingleft: 10, paddingBottom: 0, paddingRight: 4, width: 0, height: 0, centerX: nil, centerY: nil)
+        seperatorView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, paddingTop: 0, paddingleft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5, centerX: nil, centerY: nil)
         
     }
     override func setupStyleView() {
@@ -98,7 +104,7 @@ class SearchTableViewCell: BaseTableViewCell {
         kindTitleLabel.text = searchModel.kind?.uppercased()
         
         if searchModel.isClicked ?? false{
-            self.backgroundColor = .whiteSmoke
+            self.backgroundColor = .lightGray
         }else{
             self.backgroundColor = .white
         }
