@@ -1,4 +1,4 @@
-# iTunesSearchApp
+# itunesSearchApp
 Search itunes api
 
 ## Authors
