@@ -25,14 +25,15 @@ class SearchViewController: BaseViewController {
         return viewModel
     }()
     
-    lazy var customPopUpView : CustomPopUpView = {
-        let view = CustomPopUpView(frame: .zero, mainView: self.view)
+    lazy var filterView : FilterView = {
+        let view = FilterView(frame: .zero)
         view.delegate = self
         view.dataSource = self
         return view
     }()
-    lazy var filterView : FilterView = {
-       let view = FilterView(frame: .zero)
+    
+    lazy var customPopUpView : CustomPopUpView = {
+        let view = CustomPopUpView(frame: .zero, mainView: self.view)
         view.delegate = self
         view.dataSource = self
         return view
@@ -86,18 +87,17 @@ extension SearchViewController : UISearchBarDelegate {
     //MARK:UISearchBarDelegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        print(searchText)
         searchViewModel.startSearchBarTextDidChange()
         searchView.reloadTableView()
         searchViewModel.changeSearchText(searchText: searchText)
     }
     
 }
-extension SearchViewController : SearchViewModelDelegate  , SearchViewDataSource  , SearchViewDelegate{
+extension SearchViewController : SearchViewModelDelegate , SearchViewDataSource , SearchViewDelegate {
     
     //MARK:SearchViewDelegate
-    func onClickedCellWith(index: Int, sender: UITableViewCell) {
-        
+    func onClickedCellWith(index: Int, sender: SearchTableViewCell) {
+        searchViewModel.onClickedCellWith(index: index, sender: sender)
     }
     
     //MARK:SearchViewDataSource
@@ -114,15 +114,17 @@ extension SearchViewController : SearchViewModelDelegate  , SearchViewDataSource
     
     //MARK:SearchViewModelDelegate
     func errorGetSearchModels(errorMessage: String?) {
-        print("errorGetSearchModels" , errorMessage ?? "")
+        print("errorGetSearchModels: " , errorMessage ?? "")
     }
     func successGetSearchModels() {
         searchView.reloadTableView()
     }
-    
+    func showDetailViewController(detailViewModel : DetailViewModel){
+        navigationController?.pushViewController(DetailViewController(detailViewModel: detailViewModel), animated: true)
+    }
 }
 
-extension SearchViewController :CustomPopUpViewDelegate , CustomPopUpViewDataSource , FilterViewDelegate , FilterViewDataSource {
+extension SearchViewController : CustomPopUpViewDelegate , CustomPopUpViewDataSource , FilterViewDelegate , FilterViewDataSource {
    
     //MARK:FilterViewDelegate
     func onClickedCellWith(index: Int) {
@@ -149,17 +151,19 @@ extension SearchViewController :CustomPopUpViewDelegate , CustomPopUpViewDataSou
     func customPopUpViewWillClose(_ customPopUpView: UIView) {
         print("customPopUpViewWillClose")
          navigationItem.rightBarButtonItem?.isEnabled = true
+        
     }
     func customPopUpViewDidClose(_ customPopUpView: UIView) {
         print("customPopUpViewDidClose")
+        filterView.reloadCollectionView()
     }
     
     //MARK: CustomPopUpViewDataSource
     func widhtContainerView() -> CGFloat {
-        return view.frame.width - 20
+        return view.screenSize().width - 20
     }
     func heightContainerView() -> CGFloat {
-        return 320
+        return view.screenSize().width - 20
     }
     func containerContentView() -> UIView {
         return self.filterView

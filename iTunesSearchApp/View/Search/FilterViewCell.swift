@@ -34,13 +34,15 @@ class FilterViewCell: BaseCollectionViewCell {
             setupUnSelectedStyle()
         }
     }
-    override var isHighlighted: Bool {
+   /*
+     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
                 return setupSelectedStyle()
             }
         }
     }
+ */
     //MARK:SetupFunctions
     override func setupView() {
         super.setupView()

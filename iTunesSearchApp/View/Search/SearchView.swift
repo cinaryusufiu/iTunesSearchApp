@@ -15,7 +15,7 @@ protocol SearchViewDataSource : NSObjectProtocol {
     func countSearchBar()->Int
 }
 protocol SearchViewDelegate : NSObjectProtocol {
-    func onClickedCellWith(index : Int , sender : UITableViewCell)
+    func onClickedCellWith(index : Int , sender : SearchTableViewCell)
 }
 class SearchView: BaseView {
     

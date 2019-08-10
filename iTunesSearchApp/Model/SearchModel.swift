@@ -13,7 +13,6 @@ struct SearchModel : Codable {
     var collectionId : Int?
     var artistId : Int?
     var trackId:Int?
-    
     var wrapperType : String?
     var kind : String?
     var artistName : String?
@@ -22,7 +21,7 @@ struct SearchModel : Codable {
     var imageUrl: String?
     var country: String?
     var shortDescription : String?
-    
+    var isClicked : Bool? = false
    
     enum CodingKeys : String, CodingKey{
         
@@ -37,6 +36,7 @@ struct SearchModel : Codable {
         case artworkUrl100
         case country
         case shortDescription
+        case isClicked
     }
     init(from decoder: Decoder) throws {
         
@@ -44,7 +44,6 @@ struct SearchModel : Codable {
         collectionId =  try? container.decode(Int.self, forKey: .collectionId)
         artistId =  try? container.decode(Int.self, forKey: .artistId)
         trackId =  try? container.decode(Int.self, forKey: .trackId)
-        
         wrapperType = try? container.decode(String.self, forKey: .wrapperType)
         kind = try? container.decode(String.self, forKey: .kind)
         artistName = try? container.decode(String.self, forKey: .artistName)
@@ -53,10 +52,11 @@ struct SearchModel : Codable {
         imageUrl = try? container.decode(String.self, forKey: .artworkUrl100)
         country = try? container.decode(String.self, forKey: .country)
         shortDescription = try? container.decode(String.self, forKey: .shortDescription)
+        isClicked = try? container.decode(Bool.self, forKey: .isClicked)
     }
     func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
         
+        var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(collectionId, forKey: .collectionId)
         try container.encode(artistId, forKey: .artistId)
         try container.encode(trackId, forKey: .trackId)
@@ -68,5 +68,7 @@ struct SearchModel : Codable {
         try container.encode(imageUrl, forKey: .artworkUrl100)
         try container.encode(country, forKey: .country)
         try container.encode(shortDescription, forKey: .shortDescription)
+        try container.encode(isClicked, forKey: .isClicked)
+        
     }
 }

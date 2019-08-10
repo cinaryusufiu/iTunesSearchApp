@@ -21,7 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     fileprivate func setupRootViewController(){
-        window?.rootViewController = UINavigationController(rootViewController:SearchViewController())
+        
+        let navigationController = UINavigationController(rootViewController:SearchViewController())
+        navigationController.view.backgroundColor = .white
+        window?.rootViewController = navigationController
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

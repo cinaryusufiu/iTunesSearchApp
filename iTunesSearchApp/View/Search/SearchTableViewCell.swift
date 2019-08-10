@@ -59,7 +59,7 @@ class SearchTableViewCell: BaseTableViewCell {
     //MARK:SetupFunctions
     override func setupView() {
         super.setupView()
-        
+        selectionStyle = .none
         setupAddView()
         setupAddConstraint()
         setupStyleView()
@@ -91,11 +91,20 @@ class SearchTableViewCell: BaseTableViewCell {
     }
     fileprivate func setupOrganizeViewWithData(){
         guard let searchModel = self.searchModel else { return }
+        
         collectionNameLabel.text = searchModel.collectionName
         artistNameLabel.text = searchModel.artistName
         descriptionTextLabel.text = searchModel.shortDescription
         kindTitleLabel.text = searchModel.kind?.uppercased()
+        
+        if searchModel.isClicked ?? false{
+            self.backgroundColor = .whiteSmoke
+        }else{
+            self.backgroundColor = .white
+        }
         let url = URL(string: searchModel.imageUrl ?? "")
         searchImageView.sd_setImage(with: url)
+        
+        
     }
 }

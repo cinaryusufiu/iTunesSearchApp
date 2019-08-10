@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SearchViewModelDelegate : NSObjectProtocol {
     func errorGetSearchModels(errorMessage:String?)
     func successGetSearchModels()
+    func showDetailViewController(detailViewModel : DetailViewModel)
 }
 enum MediaType : String , CaseIterable {
     case all
@@ -30,26 +32,39 @@ class SearchViewModel: BaseViewModel {
     
     weak var delegate : SearchViewModelDelegate?
     
+    private var searchModels:[SearchModel] = [SearchModel]()
+    
     private var responseModel: ResponseModel<SearchModel>?{
         didSet{
             guard let searchModels = self.responseModel?.results  else { return }
             self.searchModels.removeAll()
             self.searchModels.append(contentsOf:searchModels)
+            UserDefaults.standard.saveSearchModels(searchModels: searchModels)
         }
     }
     
-    private var searchModels:[SearchModel] = [SearchModel]()
-    
     fileprivate var operationQueue : OperationQueue = OperationQueue()
     
-    private var searchText : String?
-    
-    private var selectedMediaType :MediaType = .all
-    
+    private var searchText : String?{
+        didSet{
+            reloadFilterOptionModel()
+        }
+    }
+    private var selectedMediaType :MediaType = .all{
+        didSet{
+            reloadFilterOptionModel()
+        }
+    }
     override func setupInit() {
         super.setupInit()
-        // nothing
         
+        if let searchModels = UserDefaults.standard.getSearchModels(){
+            self.searchModels.append(contentsOf: searchModels)
+        }
+        let filterOptionModel = UserDefaults.standard.getFilterOptionModel()
+        self.searchText = filterOptionModel.term
+        
+        self.selectedMediaType = mediaTypes[filterOptionModel.mediaType ?? 0]
     }
     
     func getAllSearchModels()->[SearchModel]?{
@@ -114,4 +129,31 @@ class SearchViewModel: BaseViewModel {
     override func getTitleNavigationBar() -> String? {
         return GlobalConstant.NavigationBar.searchViewController
     }
+    
+    fileprivate func reloadFilterOptionModel(){
+        var filterOptionModel = UserDefaults.standard.getFilterOptionModel()
+        if  self.searchText?.count ?? 0 >= 3 {
+            filterOptionModel.term = searchText
+        }
+        filterOptionModel.mediaType = mediaTypes.firstIndex(of: selectedMediaType) ?? 0
+        UserDefaults.standard.saveFilterOptionModel(filterOptionModel: filterOptionModel)
+    }
+}
+
+extension SearchViewModel :SearchViewDelegate {
+    
+    func onClickedCellWith(index: Int, sender: SearchTableViewCell) {
+       
+        if index < 0 || index >= searchModels.count{
+            return
+        }
+        searchModels[index].isClicked = true
+        UserDefaults.standard.saveSearchModels(searchModels: searchModels)
+        
+        sender.searchModel = searchModels[index]
+        let detailViewModel = DetailViewModel(searchModel:searchModels[index])
+        delegate?.showDetailViewController(detailViewModel:detailViewModel)
+    }
+    
+    
 }

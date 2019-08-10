@@ -67,7 +67,7 @@ class FilterView: BaseView {
         }
     }
     //MARK:OutSide-func
-    func reloadTableView(){
+    func reloadCollectionView(){
         collectionView.reloadData()
         setSelectedMediaType()
     }
@@ -81,7 +81,7 @@ extension FilterView : UICollectionViewDelegate , UICollectionViewDataSource , U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell  = collectionView.dequeueReusableCell(withReuseIdentifier:FilterViewCell.cellId, for: indexPath) as! FilterViewCell
-        cell.titleTextLabel.text = (dataSource?.getAllMediaType()?[indexPath.row]).map { $0.rawValue }
+        cell.titleTextLabel.text = (dataSource?.getAllMediaType()?[indexPath.row]).map { $0.rawValue.uppercased() }
         return cell
     }
     

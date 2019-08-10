@@ -32,7 +32,7 @@ class HeaderUtils: NSObject {
     }
     static func dynamicHeaders() -> [HTTPHeader]? {
         let headers : [HTTPHeader] = []
-       // headers.append((field : "DenemeKey",value : "DenemeValue"))
+       // headers.append((field : "",value : ""))
         return headers
     }
 }

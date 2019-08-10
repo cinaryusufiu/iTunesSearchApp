@@ -11,7 +11,8 @@ import Foundation
 struct GlobalConstant {
 
     struct NavigationBar {
-        static let searchViewController = "SearchViewController"
+        static let searchViewController = "Search View"
+        static let detailViewController = "Detail View"
     }
 }
 
